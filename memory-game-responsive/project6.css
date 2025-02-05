@@ -1,220 +1,128 @@
-/* 🎭 Unique Dance Animations 🎭 */
-@keyframes pivotDance {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-10deg); transform-origin: bottom center; }
-  50% { transform: rotate(10deg); transform-origin: bottom center; }
-  75% { transform: rotate(-10deg); transform-origin: bottom center; }
-}
-
-@keyframes bounceDance {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes topPivotDance {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-10deg); transform-origin: top center; }
-  50% { transform: rotate(10deg); transform-origin: top center; }
-  75% { transform: rotate(-10deg); transform-origin: top center; }
-}
-
-@keyframes surpriseDance {
-  0%, 100% { transform: scale(1); }
-  25% { transform: rotate(-10deg) scale(1.1); }
-  50% { transform: rotate(10deg) scale(0.9); }
-  75% { transform: rotate(-5deg) scale(1.05); }
-}
-
-@keyframes swingDance {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-15deg); transform-origin: center center; }
-  50% { transform: rotate(15deg); }
-  75% { transform: rotate(-15deg); }
-}
-
-@keyframes jitterDance {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  50% { transform: translateX(2px); }
-  75% { transform: translateX(-2px); }
-}
-
-@keyframes spinDance {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes floatDance {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-/* 🎭 Unique Fruit Animations (Dancing & Rotating) */
-@keyframes rotateDance {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(360deg); }
-}
-
-@keyframes bounceDance {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-@keyframes wiggleDance {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-15deg); }
-  50% { transform: rotate(15deg); }
-  75% { transform: rotate(-15deg); }
-}
+/* =====================================
+   1) Basic Resets and Fruit Border
+   ===================================== */
 
 /* 🍉 Fruit Border Container */
 .fruit-border {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none; /* Ensures game elements remain interactive */
-    z-index: 999;
-}
-
-/* 🍎 Individual Fruit Border Items */
-.fruit-item {
-    font-size: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* 🎮 Centered Game Container */
-.game-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(90vw, 600px); /* Responsive width */
-    background: #fff;
-    border: 5px solid #333;
-    border-radius: 10px;
-    padding: 20px;
-    z-index: 1000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-/* 🃏 Game Grid */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-/* 🔘 Buttons */
-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background: #6fa3ef;
-    color: white;
-}
-
-button:hover {
-    background: #5c8fd6;
-}
-/* 🎭 Assign Animations */
-.pivot-dance { animation: pivotDance 0.6s infinite; }
-.bounce-dance { animation: bounceDance 0.6s infinite; }
-.top-pivot-dance { animation: topPivotDance 0.6s infinite; }
-.surprise-dance { animation: surpriseDance 0.6s infinite; }
-.swing-dance { animation: swingDance 0.8s infinite ease-in-out; }
-.jitter-dance { animation: jitterDance 0.3s infinite; }
-.spin-dance { animation: spinDance 1.5s linear infinite; }
-.float-dance { animation: floatDance 1.2s infinite ease-in-out; }
-
-/* ✅ Matched cards stay green & fruit keeps dancing */
-.card.match .card-front, 
-.card.match .card-back {
-  background: green !important;
-}
-
-/* 🎊 Confetti Animation 🎊 */
-@keyframes confetti-fall {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-}
-
-/* Container for confetti */
-.confetti-container {
   position: fixed;
-  top: 0;
+  top: 0; 
   left: 0;
-  width: 100vw;
+  width: 100vw; 
   height: 100vh;
-  pointer-events: none; /* Prevents interaction */
-  overflow: hidden;
-  z-index: 9999;
+  pointer-events: none; /* Keeps game elements clickable */
+  z-index: 999;         /* Just behind the game container */
 }
 
-/* Each confetti piece */
-.confetti {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background: red; /* Default color */
-  opacity: 0.8;
-  animation: confetti-fall 3s linear infinite;
+.fruit-item {
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* 🎨 Different colors for confetti */
-.confetti:nth-child(odd) { background: blue; }
-.confetti:nth-child(even) { background: yellow; }
-.confetti:nth-child(3n) { background: green; }
-.confetti:nth-child(4n) { background: orange; }
-.confetti:nth-child(5n) { background: pink; }
-
-
-
-/* General Styling */
+/* 🎨 Body: remove default margins/padding to avoid extra space */
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #f5f5dc; /* Beige background */
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  background-color: #f5f5dc; /* Beige background */
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
+/* =====================================
+   2) Game Container (White Box)
+   ===================================== */
+/*
+   - Positioned 60px from each edge so it exactly “fills” the space inside the fruit border.
+   - Uses `overflow: auto` so the content can scroll if needed.
+*/
 .game-container {
-  width: 80%;
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
+  position: fixed;
+  top: 60px;
+  left: 60px;
+  right: 60px;
+  bottom: 60px;
+  
   background: #fff;
   border: 2px solid #333;
   border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center children horizontally */
+  justify-content: start;
+  
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: auto; /* Scroll if needed */
 }
 
-h1 {
-  margin-bottom: 20px;
+/* Header and Info. Margin/bottom spacing as needed. */
+.game-container h1 {
+  margin: 0 0 10px 0;
+  font-size: 1.8em;
 }
 
 .info {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  font-size: 1.2em;
 }
 
+/* =====================================
+   3) Buttons
+   ===================================== */
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #6fa3ef;
+  color: white;
+  font-size: 1em;
+}
+button:hover {
+  background: #5c8fd6;
+}
+
+/* =====================================
+   4) Card Grid
+   ===================================== */
+/* 
+   - Use a 4×4 layout up to 999px wide,
+   - Switch to 8×2 for screens >= 1000px wide
+*/
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  margin-bottom: 20px;
+  width: 100%;   /* Fill horizontal space of container */
+  box-sizing: border-box;
 }
 
+@media (max-width: 999px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+}
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+}
+
+/* =====================================
+   5) Cards
+   ===================================== */
 .card {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 1; /* Keep each card square */
   position: relative;
   perspective: 1000px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .card-inner {
@@ -246,10 +154,60 @@ h1 {
   background: #6fa3ef; /* Light blue */
   color: white;
 }
-
 .card-back {
-  background: #d3d3d3; /* Light gray inside */
+  background: #d3d3d3; /* Light gray */
   color: black;
   transform: rotateY(180deg);
-  display: flex;
+}
+
+/* Matched cards stay green */
+.card.match .card-front,
+.card.match .card-back {
+  background: green !important;
+}
+
+/* =====================================
+   6) Confetti Animation (unchanged)
+   ===================================== */
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+.confetti-container {
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100vw; 
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: red;
+  opacity: 0.8;
+  animation: confetti-fall 3s linear infinite;
+}
+.confetti:nth-child(odd)  { background: blue; }
+.confetti:nth-child(even) { background: yellow; }
+.confetti:nth-child(3n)   { background: green; }
+.confetti:nth-child(4n)   { background: orange; }
+.confetti:nth-child(5n)   { background: pink; }
+
+/* =====================================
+   7) Additional Fruit Animations
+   ===================================== */
+/* (unchanged) */
+@keyframes rotateDance {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(360deg); }
+}
+@keyframes wiggleDance {
+  0%, 100% { transform: rotate(0deg); }
+  25%      { transform: rotate(-15deg); }
+  50%      { transform: rotate(15deg); }
+  75%      { transform: rotate(-15deg); }
 }

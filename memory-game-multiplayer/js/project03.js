@@ -8,6 +8,11 @@ const gridColsInput = document.getElementById("gridCols");
 const welcomeContainer = document.querySelector(".welcome-container");
 const gameContainer = document.querySelector(".game-container");
 
+// New variables for two-player mode
+let currentPlayer = 1;
+let player1Matches = 0;
+let player2Matches = 0;
+
 let cards = [];
 let flippedCards = [];
 let moves = 0;
@@ -41,6 +46,14 @@ startGameBtn.addEventListener("click", () => {
 });
 
 function initializeGame() {
+  // Reset player info for a new game
+  currentPlayer = 1;
+  player1Matches = 0;
+  player2Matches = 0;
+  document.getElementById("currentPlayer").textContent = "Player 1";
+  document.getElementById("player1Matches").textContent = player1Matches;
+  document.getElementById("player2Matches").textContent = player2Matches;
+
   const totalCards = gridRows * gridCols;
   const uniquePairs = totalCards / 2;
 
@@ -54,7 +67,7 @@ function initializeGame() {
   cards = shuffleArray(cardPairs);
   createGrid();
   resetGameInfo();
-  startTimer(); // ✅ Fix: Ensure the timer starts when the game begins
+  startTimer(); // Ensure the timer starts when the game begins
 }
 
 function shuffleArray(array) {
@@ -108,29 +121,52 @@ function handleCardClick(e) {
 function checkForMatch() {
   const [card1, card2] = flippedCards;
 
-  // Compare image filenames instead of unique symbols
+  // Compare image filenames for matching
   if (card1.dataset.symbol === card2.dataset.symbol) {
     card1.classList.add("matched");
     card2.classList.add("matched");
+
+    // Update current player's match count
+    if (currentPlayer === 1) {
+      player1Matches++;
+      document.getElementById("player1Matches").textContent = player1Matches;
+    } else {
+      player2Matches++;
+      document.getElementById("player2Matches").textContent = player2Matches;
+    }
     flippedCards = [];
-    
+
     // Check if all cards are matched
     if (document.querySelectorAll(".card.matched").length === cards.length) {
       clearInterval(timerInterval);
-      alert(`Game completed in ${moves} moves and ${formatTime(timeElapsed)}!`);
+      // Determine winner
+      let winnerMessage = "";
+      if (player1Matches > player2Matches) {
+        winnerMessage = "Player 1 wins!";
+      } else if (player2Matches > player1Matches) {
+        winnerMessage = "Player 2 wins!";
+      } else {
+        winnerMessage = "It's a tie!";
+      }
+      alert(`Game completed in ${moves} moves and ${formatTime(timeElapsed)}!\n${winnerMessage}`);
     }
+    // Current player keeps the turn if a match is found.
   } else {
+    // No match: after delay, flip back cards and switch players
     setTimeout(() => {
       card1.classList.remove("flipped");
       card2.classList.remove("flipped");
       flippedCards = [];
+      // Switch the turn
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      document.getElementById("currentPlayer").textContent = "Player " + currentPlayer;
     }, 1000);
   }
 }
 
 function startTimer() {
   timeElapsed = 0;
-  clearInterval(timerInterval); // ✅ Fix: Ensure previous timer is cleared
+  clearInterval(timerInterval); // Clear any previous timer
   timerInterval = setInterval(() => {
     timeElapsed++;
     timer.textContent = formatTime(timeElapsed);
@@ -144,13 +180,21 @@ function formatTime(seconds) {
 function resetGameInfo() {
   moves = 0;
   moveCounter.textContent = moves;
-  clearInterval(timerInterval); // ✅ Fix: Clear timer on game reset
+  clearInterval(timerInterval);
   timer.textContent = "00:00";
+
+  // Reset player info
+  currentPlayer = 1;
+  player1Matches = 0;
+  player2Matches = 0;
+  document.getElementById("currentPlayer").textContent = "Player 1";
+  document.getElementById("player1Matches").textContent = player1Matches;
+  document.getElementById("player2Matches").textContent = player2Matches;
 }
 
 restartBtn.addEventListener("click", () => {
   gameContainer.classList.add("hidden");
   welcomeContainer.classList.remove("hidden");
-  clearInterval(timerInterval); // ✅ Fix: Clear the timer on restart
+  clearInterval(timerInterval); // Clear the timer on restart
   resetGameInfo();
 });
